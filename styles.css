@@ -75,7 +75,7 @@ body {
     align-items: flex-start;
     justify-content: center;
     gap: 8px;
-    margin-bottom: 20px;
+    margin-bottom: 10px;
     position: relative;
 }
 
@@ -83,7 +83,7 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 5px;
+    gap: 2px;
 }
 
 .pronunciation {
@@ -93,7 +93,8 @@ body {
     opacity: 0;
     transform: translateY(-5px);
     transition: all 0.3s ease;
-    min-height: 1.2em;
+    min-height: 0;
+    line-height: 1;
 }
 
 .name-wrapper:hover .pronunciation {
