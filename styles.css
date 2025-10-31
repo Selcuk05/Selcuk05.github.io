@@ -1,0 +1,388 @@
+:root {
+    --primary-color: #ffffff;
+    --secondary-color: #cccccc;
+    --bg-color: #000000;
+    --terminal-bg: #0a0a0a;
+    --text-color: #ffffff;
+    --text-dim: #888888;
+    --border-color: #333333;
+    --shadow-color: rgba(255, 255, 255, 0.2);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Courier New', monospace;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    overflow-x: hidden;
+    line-height: 1.6;
+}
+
+/* Scanlines removed for minimal design */
+.scanlines {
+    display: none;
+}
+
+.container {
+    position: relative;
+    z-index: 1;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+/* Terminal Window */
+.terminal {
+    max-width: 900px;
+    width: 100%;
+    background: var(--terminal-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 5px;
+    transition: transform 0.1s ease-out;
+}
+
+.terminal-header {
+    display: none;
+}
+
+.terminal-body {
+    padding: 40px 30px;
+}
+
+/* Neural Network Background */
+#neural-bg {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 0;
+    opacity: 0.5;
+}
+
+/* Name with Flag */
+.name-container {
+    display: inline-flex;
+    align-items: flex-start;
+    justify-content: center;
+    gap: 8px;
+    margin-bottom: 20px;
+    position: relative;
+}
+
+/* Turkish Flag */
+#flag-canvas {
+    width: 30px;
+    height: 20px;
+    border: 0.5px solid var(--border-color);
+    flex-shrink: 0;
+    margin-top: 0.5em;
+    opacity: 0.8;
+}
+
+.container {
+    position: relative;
+    z-index: 1;
+}
+
+/* Content */
+.content {
+    text-align: center;
+}
+
+h1 {
+    font-size: 3em;
+    font-weight: bold;
+    text-transform: uppercase;
+    color: var(--primary-color);
+    letter-spacing: 0.1em;
+    margin: 0;
+}
+
+.subtitle {
+    font-size: 1.1em;
+    color: var(--text-dim);
+    margin-bottom: 30px;
+}
+
+.bio {
+    margin: 30px 0;
+    text-align: left;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.bio p {
+    color: var(--primary-color);
+    margin: 10px 0;
+    font-size: 1.1em;
+}
+
+/* Galatasaray colored text */
+.gs-text {
+    background: linear-gradient(to right, #C8102E 0%, #C8102E 50%, #FDB913 50%, #FDB913 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    font-weight: bold;
+}
+
+/* Links */
+.links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    justify-content: center;
+    margin: 40px 0;
+}
+
+.link-button {
+    padding: 12px 25px;
+    background: transparent;
+    color: var(--primary-color);
+    border: 2px solid var(--primary-color);
+    text-decoration: none;
+    text-transform: uppercase;
+    font-family: 'Courier New', monospace;
+    font-size: 0.9em;
+    letter-spacing: 2px;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.link-button:hover {
+    background: var(--primary-color);
+    color: var(--bg-color);
+    box-shadow: 0 0 20px var(--shadow-color);
+    transform: translateY(-2px);
+}
+
+.link-button::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: var(--primary-color);
+    transition: left 0.3s ease;
+    z-index: -1;
+}
+
+.link-button:hover::before {
+    left: 0;
+}
+
+.bracket {
+    color: var(--secondary-color);
+}
+
+/* Navigation */
+.navigation {
+    margin: 40px 0;
+}
+
+.nav-link {
+    color: var(--primary-color);
+    text-decoration: none;
+    font-size: 1.2em;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    transition: all 0.3s ease;
+}
+
+.nav-link:hover {
+    color: var(--secondary-color);
+    transform: translateX(5px);
+}
+
+.prompt {
+    color: var(--secondary-color);
+    font-weight: bold;
+}
+
+.back-nav {
+    margin-bottom: 30px;
+}
+
+.back-nav .nav-link:hover {
+    transform: translateX(-5px);
+}
+
+
+/* Projects Page */
+.projects-page h1 {
+    margin-bottom: 10px;
+}
+
+.projects-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 25px;
+    margin: 40px 0;
+    text-align: left;
+}
+
+.project-card {
+    background: rgba(0, 0, 0, 0.5);
+    border: 1px solid var(--primary-color);
+    padding: 20px;
+    transition: all 0.3s ease;
+}
+
+.project-card:hover {
+    border-color: var(--secondary-color);
+    box-shadow: 0 0 20px var(--shadow-color);
+    transform: translateY(-5px);
+}
+
+.project-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 15px;
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 10px;
+}
+
+.project-icon {
+    color: var(--primary-color);
+    font-size: 1.2em;
+}
+
+.project-header h3 {
+    color: var(--primary-color);
+    font-size: 1.3em;
+    text-transform: uppercase;
+}
+
+.project-description {
+    color: var(--text-dim);
+    margin-bottom: 15px;
+    line-height: 1.6;
+}
+
+.project-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 15px;
+}
+
+.tag {
+    padding: 5px 12px;
+    background: transparent;
+    border: 1px solid var(--text-dim);
+    color: var(--text-dim);
+    font-size: 0.8em;
+    text-transform: uppercase;
+}
+
+.project-links {
+    display: flex;
+    gap: 15px;
+    flex-wrap: wrap;
+}
+
+.project-link {
+    color: var(--primary-color);
+    text-decoration: none;
+    font-size: 0.9em;
+    transition: all 0.3s ease;
+}
+
+.project-link:hover {
+    color: var(--secondary-color);
+    transform: translateX(3px);
+}
+
+/* Footer */
+footer {
+    margin-top: 30px;
+    text-align: center;
+}
+
+.footer-text {
+    color: var(--text-dim);
+    font-size: 0.85em;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .terminal-body {
+        padding: 30px 20px;
+    }
+
+    h1 {
+        font-size: 2em;
+    }
+
+    .name-container {
+        gap: 5px;
+    }
+
+    #flag-canvas {
+        width: 25px;
+        height: 17px;
+    }
+
+    .links {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .link-button {
+        text-align: center;
+    }
+
+    .projects-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .bio {
+        padding: 0 10px;
+    }
+}
+
+@media (max-width: 480px) {
+    h1 {
+        font-size: 1.5em;
+    }
+
+    .terminal-body {
+        padding: 20px 15px;
+    }
+
+    .bio p {
+        font-size: 1em;
+    }
+}
+
+/* Screen effects removed for minimal design */
+
+/* Loading animation for images */
+.loading {
+    position: relative;
+}
+
+.loading::after {
+    content: 'LOADING...';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: var(--primary-color);
+    font-size: 0.8em;
+}
