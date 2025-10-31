@@ -79,6 +79,28 @@ body {
     position: relative;
 }
 
+.name-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+}
+
+.pronunciation {
+    font-size: 0.9em;
+    color: var(--text-dim);
+    font-style: italic;
+    opacity: 0;
+    transform: translateY(-5px);
+    transition: all 0.3s ease;
+    min-height: 1.2em;
+}
+
+.name-wrapper:hover .pronunciation {
+    opacity: 1;
+    transform: translateY(0);
+}
+
 /* Turkish Flag */
 #flag-canvas {
     width: 30px;
@@ -336,6 +358,10 @@ footer {
     #flag-canvas {
         width: 25px;
         height: 17px;
+    }
+
+    .pronunciation {
+        font-size: 0.8em;
     }
 
     .links {
