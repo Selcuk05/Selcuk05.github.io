@@ -1,6 +1,8 @@
 :root {
     --primary-color: #ffffff;
     --secondary-color: #cccccc;
+    --accent-color: #4a9eff;
+    --accent-glow: rgba(74, 158, 255, 0.4);
     --bg-color: #000000;
     --terminal-bg: #0a0a0a;
     --text-color: #ffffff;
@@ -43,10 +45,26 @@ body {
 .terminal {
     max-width: 900px;
     width: 100%;
-    background: var(--terminal-bg);
+    background: rgba(10, 10, 10, 0.7);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
     border: 1px solid var(--border-color);
-    border-radius: 5px;
+    border-radius: 8px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
     transition: transform 0.1s ease-out;
+    animation: fadeInUp 0.6s ease-out;
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 .terminal-header {
@@ -66,7 +84,7 @@ body {
     height: 100%;
     pointer-events: none;
     z-index: 0;
-    opacity: 0.5;
+    opacity: 0.7;
 }
 
 /* Name with Flag */
@@ -129,6 +147,7 @@ h1 {
     color: var(--primary-color);
     letter-spacing: 0.1em;
     margin: 0;
+    text-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
 }
 
 .subtitle {
@@ -174,6 +193,7 @@ h1 {
     background: transparent;
     color: var(--primary-color);
     border: 2px solid var(--primary-color);
+    border-radius: 4px;
     text-decoration: none;
     text-transform: uppercase;
     font-family: 'Courier New', monospace;
@@ -187,8 +207,9 @@ h1 {
 .link-button:hover {
     background: var(--primary-color);
     color: var(--bg-color);
-    box-shadow: 0 0 20px var(--shadow-color);
-    transform: translateY(-2px);
+    box-shadow: 0 0 30px var(--shadow-color), 0 0 15px rgba(255, 255, 255, 0.3);
+    transform: translateY(-3px);
+    border-color: var(--primary-color);
 }
 
 .link-button::before {
@@ -259,16 +280,53 @@ h1 {
 }
 
 .project-card {
-    background: rgba(0, 0, 0, 0.5);
+    background: rgba(0, 0, 0, 0.4);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
     border: 1px solid var(--primary-color);
+    border-radius: 6px;
     padding: 20px;
     transition: all 0.3s ease;
+    animation: fadeInUp 0.6s ease-out backwards;
+}
+
+.project-card:nth-child(1) {
+    animation-delay: 0.1s;
+}
+
+.project-card:nth-child(2) {
+    animation-delay: 0.2s;
+}
+
+.project-card:nth-child(3) {
+    animation-delay: 0.3s;
+}
+
+.project-card:nth-child(4) {
+    animation-delay: 0.4s;
+}
+
+.project-card:nth-child(5) {
+    animation-delay: 0.5s;
+}
+
+.project-card:nth-child(6) {
+    animation-delay: 0.6s;
+}
+
+.project-card:nth-child(7) {
+    animation-delay: 0.7s;
+}
+
+.project-card:nth-child(8) {
+    animation-delay: 0.8s;
 }
 
 .project-card:hover {
-    border-color: var(--secondary-color);
-    box-shadow: 0 0 20px var(--shadow-color);
-    transform: translateY(-5px);
+    border-color: var(--accent-color);
+    box-shadow: 0 8px 32px var(--accent-glow), 0 0 20px var(--accent-glow);
+    transform: translateY(-8px);
+    background: rgba(0, 0, 0, 0.5);
 }
 
 .project-header {
@@ -289,6 +347,12 @@ h1 {
     color: var(--primary-color);
     font-size: 1.3em;
     text-transform: uppercase;
+    transition: color 0.3s ease;
+}
+
+.project-card:hover .project-header h3 {
+    color: var(--accent-color);
+    text-shadow: 0 0 15px var(--accent-glow);
 }
 
 .project-description {
@@ -306,11 +370,19 @@ h1 {
 
 .tag {
     padding: 5px 12px;
-    background: transparent;
-    border: 1px solid var(--text-dim);
-    color: var(--text-dim);
+    background: rgba(74, 158, 255, 0.1);
+    border: 1px solid rgba(74, 158, 255, 0.3);
+    color: var(--accent-color);
     font-size: 0.8em;
     text-transform: uppercase;
+    border-radius: 3px;
+    transition: all 0.3s ease;
+}
+
+.tag:hover {
+    background: rgba(74, 158, 255, 0.2);
+    border-color: var(--accent-color);
+    transform: scale(1.05);
 }
 
 .project-links {
@@ -320,26 +392,37 @@ h1 {
 }
 
 .project-link {
-    color: var(--primary-color);
+    color: var(--accent-color);
     text-decoration: none;
     font-size: 0.9em;
     transition: all 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
 }
 
 .project-link:hover {
-    color: var(--secondary-color);
-    transform: translateX(3px);
+    color: var(--primary-color);
+    transform: translateX(5px);
+    text-shadow: 0 0 10px var(--accent-glow);
 }
 
 /* Footer */
 footer {
-    margin-top: 30px;
+    margin-top: 40px;
     text-align: center;
+    padding: 20px 0;
 }
 
 .footer-text {
     color: var(--text-dim);
     font-size: 0.85em;
+    opacity: 0.7;
+    transition: opacity 0.3s ease;
+}
+
+.footer-text:hover {
+    opacity: 1;
 }
 
 /* Responsive Design */
