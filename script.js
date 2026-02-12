@@ -1,309 +1,397 @@
-class NeuralNetworkBackground {
+// Pixel Stars Background
+class PixelStarsBackground {
     constructor() {
-        this.canvas = document.createElement('canvas');
-        this.canvas.id = 'neural-bg';
-        this.ctx = this.canvas.getContext('2d');
-
-        this.layers = [];
-        this.particles = [];
-        this.time = 0;
-
-        this.resize();
-        window.addEventListener('resize', () => this.resize());
-
-        document.body.insertBefore(this.canvas, document.body.firstChild);
-        this.buildNetwork();
-        this.animate();
+        this.createStars();
+        this.createScrollIndicator();
     }
 
-    resize() {
-        this.canvas.width = window.innerWidth;
-        this.canvas.height = window.innerHeight;
-        this.buildNetwork();
+    createStars() {
+        const starCount = 80;
+        for (let i = 0; i < starCount; i++) {
+            const star = document.createElement('div');
+            star.className = 'pixel-star';
+            star.style.left = Math.random() * 100 + '%';
+            star.style.top = Math.random() * 100 + '%';
+            star.style.animationDelay = Math.random() * 3 + 's';
+            star.style.animationDuration = (2 + Math.random() * 2) + 's';
+            document.body.appendChild(star);
+        }
     }
 
-    buildNetwork() {
-        const w = this.canvas.width;
-        const h = this.canvas.height;
+    createScrollIndicator() {
+        // Only show on homepage
+        if (window.location.pathname.includes('projects')) return;
+        
+        const indicator = document.createElement('div');
+        indicator.className = 'scroll-indicator';
+        indicator.innerHTML = '▼ SCROLL ▼';
+        document.body.appendChild(indicator);
 
-        const architecture = [4, 6, 6, 4];
-        const layerSpacing = w / (architecture.length + 1);
-
-        this.layers = [];
-        this.connections = [];
-
-        for (let l = 0; l < architecture.length; l++) {
-            const layerNodes = [];
-            const numNodes = architecture[l];
-            const nodeSpacing = h / (numNodes + 1);
-            const x = layerSpacing * (l + 1);
-
-            for (let n = 0; n < numNodes; n++) {
-                const y = nodeSpacing * (n + 1);
-                layerNodes.push({ x, y });
+        // Hide indicator after scrolling
+        let scrolled = false;
+        window.addEventListener('scroll', () => {
+            if (!scrolled && window.scrollY > 100) {
+                indicator.style.opacity = '0';
+                indicator.style.pointerEvents = 'none';
+                scrolled = true;
+                setTimeout(() => {
+                    indicator.style.display = 'none';
+                }, 500);
             }
-            this.layers.push(layerNodes);
-        }
-
-        this.connections = [];
-        for (let l = 0; l < this.layers.length - 1; l++) {
-            const currentLayer = this.layers[l];
-            const nextLayer = this.layers[l + 1];
-
-            for (let i = 0; i < currentLayer.length; i++) {
-                for (let j = 0; j < nextLayer.length; j++) {
-                    this.connections.push({
-                        from: currentLayer[i],
-                        to: nextLayer[j],
-                        particles: []
-                    });
-                }
-            }
-        }
-    }
-
-    createParticle() {
-        if (Math.random() > 0.98) {
-            const connection = this.connections[Math.floor(Math.random() * this.connections.length)];
-            connection.particles.push({
-                progress: 0,
-                speed: 0.005 + Math.random() * 0.01
-            });
-        }
-    }
-
-    draw() {
-        this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-        this.time += 0.01;
-
-        this.ctx.strokeStyle = 'rgba(255, 255, 255, 0.1)';
-        this.ctx.lineWidth = 5;
-
-        this.connections.forEach(conn => {
-            this.ctx.beginPath();
-            this.ctx.moveTo(conn.from.x, conn.from.y);
-            this.ctx.lineTo(conn.to.x, conn.to.y);
-            this.ctx.stroke();
-
-            conn.particles = conn.particles.filter(particle => {
-                particle.progress += particle.speed;
-
-                if (particle.progress >= 1) return false;
-
-                const x = conn.from.x + (conn.to.x - conn.from.x) * particle.progress;
-                const y = conn.from.y + (conn.to.y - conn.from.y) * particle.progress;
-
-                const gradient = this.ctx.createRadialGradient(x, y, 0, x, y, 4);
-                gradient.addColorStop(0, 'rgba(255, 255, 255, 0.8)');
-                gradient.addColorStop(1, 'rgba(255, 255, 255, 0)');
-
-                this.ctx.fillStyle = gradient;
-                this.ctx.beginPath();
-                this.ctx.arc(x, y, 4, 0, Math.PI * 2);
-                this.ctx.fill();
-
-                return true;
-            });
         });
-
-        this.layers.forEach((layer, layerIdx) => {
-            layer.forEach((node, nodeIdx) => {
-                const pulse = Math.sin(this.time * 2 + layerIdx + nodeIdx) * 0.3 + 0.7;
-
-                this.ctx.beginPath();
-                this.ctx.arc(node.x, node.y, 15, 0, Math.PI * 2);
-                this.ctx.fillStyle = `rgba(255, 255, 255, ${pulse * 0.5})`;
-                this.ctx.fill();
-
-                this.ctx.strokeStyle = `rgba(255, 255, 255, ${pulse * 0.3})`;
-                this.ctx.lineWidth = 2;
-                this.ctx.stroke();
-            });
-        });
-    }
-
-    animate() {
-        this.createParticle();
-        this.draw();
-        requestAnimationFrame(() => this.animate());
     }
 }
 
+// Turkish Flag with Pixel Art Style
 class TurkishFlag {
     constructor(canvasId) {
         this.canvas = document.getElementById(canvasId);
         if (!this.canvas) return;
 
         this.ctx = this.canvas.getContext('2d');
-        this.width = 400;
-        this.height = 267;
+        // Use smaller dimensions for pixelated effect
+        this.width = 96;
+        this.height = 64;
         this.canvas.width = this.width;
         this.canvas.height = this.height;
 
-        this.time = 0;
-        this.waveAmplitude = 12;
-        this.waveFrequency = 0.02;
+        // Disable image smoothing for pixel-perfect rendering
+        this.ctx.imageSmoothingEnabled = false;
 
-        this.drawFlag();
-        this.originalFlag = this.ctx.getImageData(0, 0, this.width, this.height);
-
-        this.animate();
+        this.drawPixelFlag();
     }
 
-    drawFlag() {
+    drawPixelFlag() {
+        // Red background
         this.ctx.fillStyle = '#E30A17';
         this.ctx.fillRect(0, 0, this.width, this.height);
 
-        const flagCenterX = this.width * 0.425;
-        const flagCenterY = this.height / 2;
-        const moonRadius = this.height * 0.28;
+        const flagCenterX = Math.floor(this.width * 0.4);
+        const flagCenterY = Math.floor(this.height / 2);
+        const moonRadius = Math.floor(this.height * 0.28);
 
+        // Draw white circle (moon base)
         this.ctx.fillStyle = '#FFFFFF';
+        this.drawPixelCircle(flagCenterX, flagCenterY, moonRadius);
 
-        this.ctx.beginPath();
-        this.ctx.arc(flagCenterX, flagCenterY, moonRadius, 0, Math.PI * 2);
-        this.ctx.fill();
-
+        // Draw red circle (crescent)
         this.ctx.fillStyle = '#E30A17';
-        this.ctx.beginPath();
-        this.ctx.arc(flagCenterX + moonRadius * 0.35, flagCenterY, moonRadius * 0.75, 0, Math.PI * 2);
-        this.ctx.fill();
+        this.drawPixelCircle(
+            flagCenterX + Math.floor(moonRadius * 0.4),
+            flagCenterY,
+            Math.floor(moonRadius * 0.75)
+        );
 
-        const starCenterX = flagCenterX + moonRadius * 1.05;
+        // Draw star
+        const starCenterX = flagCenterX + Math.floor(moonRadius * 1.2);
         const starCenterY = flagCenterY;
-        const starOuterRadius = this.height * 0.14;
-        const starInnerRadius = starOuterRadius * 0.382;
+        const starSize = Math.floor(this.height * 0.15);
 
         this.ctx.fillStyle = '#FFFFFF';
-        this.ctx.beginPath();
+        this.drawPixelStar(starCenterX, starCenterY, starSize);
+    }
 
-        for (let i = 0; i < 10; i++) {
-            const radius = i % 2 === 0 ? starOuterRadius : starInnerRadius;
-            const angle = (i * Math.PI) / 5 - Math.PI / 2;
-            const x = starCenterX + Math.cos(angle) * radius;
-            const y = starCenterY + Math.sin(angle) * radius;
-
-            if (i === 0) {
-                this.ctx.moveTo(x, y);
-            } else {
-                this.ctx.lineTo(x, y);
+    drawPixelCircle(cx, cy, radius) {
+        for (let y = -radius; y <= radius; y++) {
+            for (let x = -radius; x <= radius; x++) {
+                if (x * x + y * y <= radius * radius) {
+                    this.ctx.fillRect(cx + x, cy + y, 1, 1);
+                }
             }
         }
+    }
 
+    drawPixelStar(cx, cy, size) {
+        // Simple 5-pointed star using pixel blocks
+        const points = [];
+        for (let i = 0; i < 10; i++) {
+            const radius = i % 2 === 0 ? size : size * 0.4;
+            const angle = (i * Math.PI) / 5 - Math.PI / 2;
+            points.push({
+                x: Math.floor(cx + Math.cos(angle) * radius),
+                y: Math.floor(cy + Math.sin(angle) * radius)
+            });
+        }
+
+        // Fill the star shape
+        this.ctx.beginPath();
+        this.ctx.moveTo(points[0].x, points[0].y);
+        for (let i = 1; i < points.length; i++) {
+            this.ctx.lineTo(points[i].x, points[i].y);
+        }
         this.ctx.closePath();
         this.ctx.fill();
     }
-
-    applyDithering() {
-        const imageData = this.ctx.getImageData(0, 0, this.width, this.height);
-        const data = imageData.data;
-
-        const grayscale = new Float32Array(this.width * this.height);
-        for (let i = 0; i < data.length; i += 4) {
-            const gray = data[i] * 0.2126 + data[i + 1] * 0.7152 + data[i + 2] * 0.0722;
-            grayscale[i / 4] = gray;
-        }
-
-        for (let y = 0; y < this.height; y++) {
-            for (let x = 0; x < this.width; x++) {
-                const idx = y * this.width + x;
-                const oldPixel = grayscale[idx];
-
-                const threshold = 140;
-                const newPixel = oldPixel < threshold ? 0 : 255;
-                grayscale[idx] = newPixel;
-
-                const error = oldPixel - newPixel;
-
-                if (x + 1 < this.width) {
-                    grayscale[idx + 1] += error * 7 / 16;
-                }
-                if (y + 1 < this.height) {
-                    if (x > 0) {
-                        grayscale[idx + this.width - 1] += error * 3 / 16;
-                    }
-                    grayscale[idx + this.width] += error * 5 / 16;
-                    if (x + 1 < this.width) {
-                        grayscale[idx + this.width + 1] += error * 1 / 16;
-                    }
-                }
-            }
-        }
-
-        for (let i = 0; i < grayscale.length; i++) {
-            const value = grayscale[i] > 127 ? 255 : 0;
-            const idx = i * 4;
-            data[idx] = value;
-            data[idx + 1] = value;
-            data[idx + 2] = value;
-            data[idx + 3] = 255;
-        }
-
-        this.ctx.putImageData(imageData, 0, 0);
-    }
-
-    applyWaveEffect() {
-        const originalImageData = this.ctx.getImageData(0, 0, this.width, this.height);
-        const outputImageData = this.ctx.createImageData(this.width, this.height);
-
-        for (let i = 0; i < outputImageData.data.length; i += 4) {
-            outputImageData.data[i] = 0;
-            outputImageData.data[i + 1] = 0;
-            outputImageData.data[i + 2] = 0;
-            outputImageData.data[i + 3] = 255;
-        }
-
-        for (let y = 0; y < this.height; y++) {
-            for (let x = 0; x < this.width; x++) {
-                const normalizedX = x / this.width;
-                const amplitudeFactor = Math.sin(normalizedX * Math.PI);
-                const waveOffset = Math.sin(x * this.waveFrequency + this.time) * this.waveAmplitude * amplitudeFactor;
-                const sourceY = Math.floor(y + waveOffset);
-
-                if (sourceY >= 0 && sourceY < this.height) {
-                    const sourceIdx = (sourceY * this.width + x) * 4;
-                    const destIdx = (y * this.width + x) * 4;
-
-                    outputImageData.data[destIdx] = originalImageData.data[sourceIdx];
-                    outputImageData.data[destIdx + 1] = originalImageData.data[sourceIdx + 1];
-                    outputImageData.data[destIdx + 2] = originalImageData.data[sourceIdx + 2];
-                    outputImageData.data[destIdx + 3] = originalImageData.data[sourceIdx + 3];
-                }
-            }
-        }
-
-        this.ctx.putImageData(outputImageData, 0, 0);
-    }
-
-    animate() {
-        this.time += 0.03;
-
-        this.ctx.putImageData(this.originalFlag, 0, 0);
-
-        this.applyWaveEffect();
-
-        requestAnimationFrame(() => this.animate());
-    }
 }
 
+// Initialize everything when DOM is ready
 document.addEventListener('DOMContentLoaded', () => {
-    new NeuralNetworkBackground();
+    new PixelStarsBackground();
     new TurkishFlag('flag-canvas');
+    initScrollEffects();
+    initScrollProgress();
+    initBackToTop();
+    initScrollUnfurl();
 });
 
-document.addEventListener('mousemove', (e) => {
+// Scroll unfurling animation with GSAP
+function initScrollUnfurl() {
+    const container = document.querySelector('.container');
+    const terminal = document.querySelector('.terminal');
+    const h1 = document.querySelector('h1');
+    const bio = document.querySelector('.bio');
+    const links = document.querySelector('.links');
+    const navigation = document.querySelector('.navigation');
+    const loader = document.querySelector('.page-loader');
+
+    if (!terminal) return;
+
+    // Create wrapper for terminal + rod
+    const wrapper = document.createElement('div');
+    wrapper.style.position = 'relative';
+    wrapper.style.maxWidth = '650px';
+    wrapper.style.width = '100%';
+    wrapper.style.overflow = 'visible';
+    
+    // Wrap the terminal
+    terminal.parentNode.insertBefore(wrapper, terminal);
+    wrapper.appendChild(terminal);
+
+    // Create actual scroll rod element
+    const scrollRod = document.createElement('div');
+    scrollRod.className = 'scroll-rod';
+    wrapper.insertBefore(scrollRod, terminal);
+    
+    // Create decorative rod end caps
+    const leftCap = document.createElement('div');
+    leftCap.className = 'rod-cap rod-cap-left';
+    scrollRod.appendChild(leftCap);
+    
+    const rightCap = document.createElement('div');
+    rightCap.className = 'rod-cap rod-cap-right';
+    scrollRod.appendChild(rightCap);
+    
+    // Create decorative tassels/ribbons
+    const leftTassel = document.createElement('div');
+    leftTassel.className = 'scroll-tassel tassel-left';
+    leftCap.appendChild(leftTassel);
+    
+    const rightTassel = document.createElement('div');
+    rightTassel.className = 'scroll-tassel tassel-right';
+    rightCap.appendChild(rightTassel);
+
+    // Set initial states (preserve the translateX(-50%) from CSS)
+    gsap.set(scrollRod, { 
+        opacity: 0, 
+        y: -150, 
+        rotation: 360,
+        scale: 0.3,
+        xPercent: -50, // This preserves the centering
+        transformOrigin: 'center center'
+    });
+    gsap.set([leftCap, rightCap], {
+        scale: 0,
+        rotation: 180
+    });
+    gsap.set(terminal, { clipPath: 'inset(0 0 100% 0)' });
+
+    // Create GSAP timeline
+    const tl = gsap.timeline({
+        defaults: {
+            ease: 'power2.out'
+        }
+    });
+
+    // 1. Fade out loader
+    tl.to(loader, {
+        opacity: 0,
+        duration: 0.4,
+        delay: 0.8,
+        onComplete: () => {
+            if (loader) loader.remove();
+        }
+    })
+    
+    // 2. Animate scroll rod spinning and dropping into place
+    .to(scrollRod, {
+        opacity: 1,
+        y: 0,
+        rotation: 0,
+        scale: 1,
+        duration: 1.5,
+        ease: 'elastic.out(1, 0.6)'
+    }, '+=0.2')
+    
+    // 2.5 Pop in the rod caps
+    .to([leftCap, rightCap], {
+        scale: 1,
+        rotation: 0,
+        duration: 0.6,
+        ease: 'back.out(2)',
+        stagger: 0.1
+    }, '-=0.8')
+    
+    // Add subtle float after main animation
+    .add(() => {
+        gsap.to(scrollRod, {
+            y: '+=5',
+            duration: 1.5,
+            ease: 'sine.inOut',
+            yoyo: true,
+            repeat: -1
+        });
+    }, '+=0.5')
+    
+    // 3. Unfurl the scroll from top to bottom
+    .to(terminal, {
+        clipPath: 'inset(0 0 0% 0)',
+        duration: 2.2,
+        ease: 'power1.inOut'
+    }, '-=0.5')
+    
+    // 4. Animate content elements sequentially
+    .to(h1, {
+        opacity: 1,
+        y: 0,
+        duration: 0.6,
+        ease: 'back.out(1.7)'
+    }, '-=1.4')
+    
+    .to(bio, {
+        opacity: 1,
+        y: 0,
+        duration: 0.6,
+        ease: 'back.out(1.7)'
+    }, '-=1.1')
+    
+    .to(links, {
+        opacity: 1,
+        y: 0,
+        duration: 0.6,
+        ease: 'back.out(1.7)'
+    }, '-=0.9')
+    
+    .to(navigation, {
+        opacity: 1,
+        y: 0,
+        duration: 0.6,
+        ease: 'back.out(1.7)'
+    }, '-=0.7');
+}
+
+// Scroll reveal effects
+function initScrollEffects() {
     const terminal = document.querySelector('.terminal');
     if (!terminal) return;
 
-    const moveX = (e.clientX - window.innerWidth / 2) * 0.01;
-    const moveY = (e.clientY - window.innerHeight / 2) * 0.01;
+    // Parallax effect on scroll
+    let ticking = false;
+    window.addEventListener('scroll', () => {
+        if (!ticking) {
+            window.requestAnimationFrame(() => {
+                const scrolled = window.scrollY;
+                const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
+                const scrollPercent = scrolled / maxScroll;
+                
+                // Subtle scroll effect
+                if (terminal) {
+                    const translateY = scrollPercent * 20;
+                    terminal.style.transform = `translateY(-${translateY}px)`;
+                }
+                
+                ticking = false;
+            });
+            ticking = true;
+        }
+    });
+}
 
-    terminal.style.transform = `perspective(1000px) rotateY(${moveX}deg) rotateX(${-moveY}deg)`;
+// Scroll progress bar
+function initScrollProgress() {
+    const progressBar = document.createElement('div');
+    progressBar.className = 'scroll-progress';
+    document.body.appendChild(progressBar);
+
+    let ticking = false;
+    window.addEventListener('scroll', () => {
+        if (!ticking) {
+            window.requestAnimationFrame(() => {
+                const scrolled = window.scrollY;
+                const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
+                const scrollPercent = (scrolled / maxScroll) * 100;
+                
+                progressBar.style.width = scrollPercent + '%';
+                
+                ticking = false;
+            });
+            ticking = true;
+        }
+    });
+}
+
+// Add pixel button sound effect simulation (visual feedback)
+document.addEventListener('click', (e) => {
+    if (e.target.matches('.link-button, .nav-link, .project-link, .tag')) {
+        // Create a quick flash effect
+        e.target.style.transition = 'none';
+        e.target.style.filter = 'brightness(1.5)';
+        setTimeout(() => {
+            e.target.style.transition = '';
+            e.target.style.filter = '';
+        }, 100);
+    }
 });
 
-document.addEventListener('mouseleave', () => {
-    const terminal = document.querySelector('.terminal');
-    if (!terminal) return;
+// Smooth scroll reveal for elements
+function revealOnScroll() {
+    const elements = document.querySelectorAll('.bio, .links, .navigation, .project-card');
+    
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.style.opacity = '1';
+                entry.target.style.transform = 'translateY(0)';
+            }
+        });
+    }, {
+        threshold: 0.1,
+        rootMargin: '0px 0px -50px 0px'
+    });
 
-    terminal.style.transform = 'perspective(1000px) rotateY(0deg) rotateX(0deg)';
-});
+    elements.forEach(el => {
+        observer.observe(el);
+    });
+}
+
+// Call reveal on scroll if needed
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', revealOnScroll);
+} else {
+    revealOnScroll();
+}
+
+// Back to top button
+function initBackToTop() {
+    const backToTop = document.createElement('div');
+    backToTop.className = 'back-to-top';
+    backToTop.innerHTML = '▲';
+    backToTop.title = 'Back to Top';
+    document.body.appendChild(backToTop);
+
+    // Show/hide based on scroll position
+    window.addEventListener('scroll', () => {
+        if (window.scrollY > 500) {
+            backToTop.classList.add('visible');
+        } else {
+            backToTop.classList.remove('visible');
+        }
+    });
+
+    // Smooth scroll to top
+    backToTop.addEventListener('click', () => {
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+        });
+    });
+}
