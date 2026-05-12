@@ -4,60 +4,192 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>selcuk.zone</title>
+    <title>Selçuk Öz</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
 </head>
 
 <body>
-    <div class="page-loader"></div>
-    
-    <div class="container">
-        <div class="terminal">
-            <div class="terminal-body">
-                <div class="content">
-                    <div class="name-container">
-                        <div class="name-wrapper">
-                            <h1>SELÇUK ÖZ</h1>
-                            <span class="pronunciation">/selˈtʃuk øz/</span>
-                        </div>
-                        <canvas id="flag-canvas"></canvas>
-                    </div>
-                    <div class="bio">
-                        <p>welcome to my zone :)</p>
-                        <p>working on and learning about blockchains and ai r&d</p>
-                        <p>always open for collaboration on cool projects</p>
-                        <p>interested in music, history, <span class="gs-text">football</span> and finance</p>
-                    </div>
 
-                    <div class="links">
-                        <a href="https://github.com/Selcuk05" target="_blank" class="link-button">
-                            <span class="bracket">[</span> GitHub <span class="bracket">]</span>
-                        </a>
-                        <a href="https://www.linkedin.com/in/selcuk-oz/" target="_blank" class="link-button">
-                            <span class="bracket">[</span> LinkedIn <span class="bracket">]</span>
-                        </a>
-                        <a href="mailto:selcuk_45@protonmail.com" class="link-button">
-                            <span class="bracket">[</span> Email <span class="bracket">]</span>
-                        </a>
-                    </div>
+    <main>
 
-                    <div class="navigation">
-                        <a href="projects.html" class="nav-link">
-                            <span class="prompt">></span> view projects
-                        </a>
-                    </div>
+        <!-- Hero -->
+        <section class="hero fade-in">
+            <div class="hero-text">
+                <h1>Selçuk Öz</h1>
+                <p class="tagline">Applied AI — Computer Vision</p>
+                <div class="hero-links">
+                    <a href="https://github.com/Selcuk05" target="_blank">GitHub</a>
+                    <span class="dot">·</span>
+                    <a href="https://www.linkedin.com/in/selcuk-oz/" target="_blank">LinkedIn</a>
+                    <span class="dot">·</span>
+                    <a href="mailto:selcuk_45@protonmail.com">Email</a>
+                    <span class="dot">·</span>
+                    <a href="https://www.kaggle.com/selcukwashere" target="_blank">Kaggle</a>
                 </div>
             </div>
-        </div>
+            <img src="photo.jpg" alt="Selçuk Öz" class="hero-photo">
+        </section>
 
-        <footer>
-            <p class="footer-text">
-                © 2025 selcuk.zone
-            </p>
-        </footer>
-    </div>
+        <!-- About -->
+        <section id="about" class="section">
+            <h2 class="section-label fade-in">About</h2>
+            <div class="about fade-in">
+                <p>Software engineering student at Kocaeli University, currently an ML intern at Intuition Machines. I
+                    work at the intersection of computer vision, AI research, and blockchain - and I care about building
+                    things that actually work.</p>
+                <p>Interested in music, history, football, and finance. Fluent in Turkish and English, learning German.
+                </p>
+            </div>
+        </section>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+        <!-- Experience -->
+        <section id="experience" class="section">
+            <h2 class="section-label fade-in">Experience</h2>
+            <div class="experience-list">
+
+                <div class="exp-item fade-in">
+                    <div class="exp-left">
+                        <span class="exp-role">ML Intern</span>
+                        <span class="exp-company">Intuition Machines</span>
+                    </div>
+                    <span class="exp-date">Mar 2026 — Present</span>
+                </div>
+
+                <div class="exp-item fade-in">
+                    <div class="exp-left">
+                        <span class="exp-role">Computer Vision Developer</span>
+                        <span class="exp-company">NovaVision AI <span class="exp-badge">TÜBİTAK STAR</span></span>
+                    </div>
+                    <span class="exp-date">Sep 2025 — Present</span>
+                </div>
+
+                <div class="exp-item fade-in">
+                    <div class="exp-left">
+                        <span class="exp-role">R&D Software Assistant</span>
+                        <span class="exp-company">Sefine Shipyard</span>
+                    </div>
+                    <span class="exp-date">Sep 2024 — Jan 2025</span>
+                </div>
+
+                <div class="exp-item fade-in">
+                    <div class="exp-left">
+                        <span class="exp-role">Smart Contract Developer</span>
+                        <span class="exp-company">Freelance</span>
+                    </div>
+                    <span class="exp-date">May 2022 — Dec 2024</span>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- Work -->
+        <section id="work" class="section">
+            <h2 class="section-label fade-in">Work</h2>
+
+            <div class="projects">
+
+                <article class="project fade-in">
+                    <div class="project-meta">
+                        <h3 class="project-title">AgroTech</h3>
+                        <div class="project-tags">
+                            <span>Python</span>
+                            <span>OpenCV</span>
+                            <span>TensorFlow</span>
+                            <span>Edge AI</span>
+                        </div>
+                    </div>
+                    <p class="project-desc">Edge AI crop disease detection (85% accuracy) using TensorFlow on Raspberry
+                        Pi. Won Best Presentation Award out of 64 teams at TEKNOFEST 2023 "Technology for Humanity"
+                        competition.</p>
+                </article>
+
+                <article class="project fade-in">
+                    <div class="project-meta">
+                        <h3 class="project-title">NoterLLM</h3>
+                        <div class="project-tags">
+                            <span>Python</span>
+                            <span>LangChain</span>
+                            <span>RAG</span>
+                            <span>FAISS</span>
+                        </div>
+                    </div>
+                    <p class="project-desc">Legal information retrieval system for Turkish Notary Law using a RAG
+                        pipeline with LangChain and Qwen2.5-7B. FAISS vector store built from 125+ official circulars
+                        for contextually aware queries.</p>
+                    <div class="project-links">
+                        <a href="https://github.com/Selcuk05/NoterLLM" target="_blank">GitHub</a>
+                        <a href="https://huggingface.co/spaces/selcukwashere/NoterLLM-Demo" target="_blank">Demo</a>
+                    </div>
+                </article>
+
+                <article class="project fade-in">
+                    <div class="project-meta">
+                        <h3 class="project-title">Turkish Automobile Dataset</h3>
+                        <div class="project-tags">
+                            <span>PyTorch</span>
+                            <span>Selenium</span>
+                            <span>Computer Vision</span>
+                            <span>XGBoost</span>
+                        </div>
+                    </div>
+                    <p class="project-desc">Data pipeline scraping Turkish automobile sites, with a PyTorch hierarchical
+                        image classifier for brand/model/trim identification and an XGBoost price predictor from vehicle
+                        specs.</p>
+                    <div class="project-links">
+                        <a href="https://github.com/Selcuk05/turkish_2ndhand_automobile" target="_blank">GitHub</a>
+                        <a href="https://www.kaggle.com/datasets/selcukwashere/turkish-recent-automobile-sales"
+                            target="_blank">Dataset</a>
+                    </div>
+                </article>
+
+                <article class="project fade-in">
+                    <div class="project-meta">
+                        <h3 class="project-title">GreenRadar</h3>
+                        <div class="project-tags">
+                            <span>Python</span>
+                            <span>Geospatial</span>
+                            <span>React</span>
+                            <span>Gemini</span>
+                        </div>
+                    </div>
+                    <p class="project-desc">NASA Space Apps Challenge 2025. AI-powered web app that uses NASA satellite
+                        data and Gemini LLM to generate afforestation reports for user-selected regions, supporting
+                        climate action planning.</p>
+                    <div class="project-links">
+                        <a href="https://github.com/KOU-Software-Community/GreenRadar" target="_blank">GitHub</a>
+                    </div>
+                </article>
+
+                <article class="project fade-in">
+                    <div class="project-meta">
+                        <h3 class="project-title">Canary Pet</h3>
+                        <div class="project-tags">
+                            <span>Solidity</span>
+                            <span>Smart Contracts</span>
+                            <span>NFTs</span>
+                            <span>GameFi</span>
+                        </div>
+                    </div>
+                    <p class="project-desc">Smart contracts for a Tamagotchi-style blockchain game with ERC-721 NFT pets
+                        and accessories. Play-to-earn ecosystem where pet care mechanics generate CGLD token rewards.
+                    </p>
+                </article>
+
+            </div>
+        </section>
+
+
+    </main>
+
+    <footer class="footer">
+        <p>© 2026 selcuk.zone</p>
+    </footer>
+
+    <button class="back-to-top" aria-label="Back to top">↑</button>
+
     <script src="script.js"></script>
 </body>
 
