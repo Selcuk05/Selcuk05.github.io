@@ -6,6 +6,23 @@
 }
 
 :root {
+    --bg: #0e0e0e;
+    --surface: #161616;
+    --text: #f2f2f2;
+    --text-secondary: #b5b5b5;
+    --text-muted: #7a7a7a;
+    --accent: #a5b4fc;
+    --accent-hover: #c7d2fe;
+    --border: #2a2a2a;
+    --tag-bg: #1c1c1c;
+    --tag-text: #d4d4d4;
+    --badge-bg: rgba(165, 180, 252, 0.12);
+    --font: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    --max-width: 680px;
+    color-scheme: dark;
+}
+
+:root[data-theme="light"] {
     --bg: #fafafa;
     --surface: #ffffff;
     --text: #111111;
@@ -16,8 +33,8 @@
     --border: #e5e5e5;
     --tag-bg: #f0f0f0;
     --tag-text: #444444;
-    --font: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-    --max-width: 680px;
+    --badge-bg: rgba(79, 70, 229, 0.08);
+    color-scheme: light;
 }
 
 html {
@@ -219,6 +236,9 @@ main {
     display: flex;
     flex-direction: column;
     gap: 0;
+    list-style: none;
+    margin: 0;
+    padding: 0;
 }
 
 .exp-item {
@@ -258,7 +278,7 @@ main {
     font-size: 0.68rem;
     font-weight: 600;
     color: var(--accent);
-    background: rgba(79, 70, 229, 0.08);
+    background: var(--badge-bg);
     padding: 1px 6px;
     border-radius: 4px;
     letter-spacing: 0.02em;
@@ -282,6 +302,29 @@ main {
 .footer p {
     font-size: 0.82rem;
     color: var(--text-muted);
+}
+
+/* ── Theme toggle ─────────────────────────────────────────── */
+.theme-toggle {
+    position: fixed;
+    top: 22px;
+    right: 22px;
+    z-index: 10;
+    background: transparent;
+    color: var(--text-muted);
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    font-family: var(--font);
+    font-size: 0.75rem;
+    font-weight: 500;
+    letter-spacing: 0.02em;
+    padding: 4px 12px;
+    cursor: pointer;
+}
+
+.theme-toggle:hover {
+    color: var(--text);
+    border-color: var(--text-muted);
 }
 
 /* ── Back to Top ──────────────────────────────────────────── */
@@ -370,6 +413,11 @@ main {
 
     .footer {
         padding: 32px 16px 40px;
+    }
+
+    .theme-toggle {
+        top: 16px;
+        right: 16px;
     }
 
     .back-to-top {
